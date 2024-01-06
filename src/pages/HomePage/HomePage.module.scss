@@ -1,0 +1,45 @@
+.list_group_item {
+  font-size: 20px;
+  font-weight: 200;
+  height: 35px;
+}
+.time_status_rooms {
+  display: flex;
+  justify-content: space-between;
+}
+.time_status {
+  display: flex;
+  height: 75vh;
+  width: 80%;
+  overflow-y: scroll;
+}
+.play_rooms {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  gap: 5px;
+  margin-left: 10px;
+  width: 20%;
+}
+
+.room {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 25%;
+}
+.room.active {
+  background: #fff;
+  color: #000;
+}
+hr {
+  margin: 5px;
+}
+li {
+  font-size: 24px;
+  font-weight: 600;
+}

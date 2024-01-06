@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Michroma&family=Play:wght@400;700&display=swap');
+
+* {
+  font-family: 'Michroma', 'Segoe UI', sans-serif;
+  font-weight: 500;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #414141;
+  color: #fff;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+li {
+  font-size: 24px;
+  font-weight: 600;
+}
+hr {
+  margin: 5px;
+}
+button {
+  background: none;
+  border: none;
+  color: #fff;
+}
+input {
+  &::placeholder {
+    font-family: 'Michroma', 'Segoe UI', sans-serif;
+  }
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  width: 90%;
+  margin: 0 auto;
+}

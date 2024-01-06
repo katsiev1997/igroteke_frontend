@@ -1,0 +1,27 @@
+.status_slot {
+  height: 50px;
+  width: 20vh;
+  border-top: 1px solid #414141;
+  border-bottom: 1px solid #414141;
+  padding-left: 30px;
+  font-weight: 200;
+  display: flex;
+  align-items: center;
+}
+.free {
+  background: linear-gradient(
+    270deg,
+    rgba(242, 0, 255, 0) -1.43%,
+    #00ff0896 100%
+  );
+}
+.occupied {
+  background: linear-gradient(
+    270deg,
+    rgba(255, 0, 0, 0) -1.43%,
+    rgba(255, 0, 0, 0.6) 100%
+  );
+}
+.status {
+  margin-top: 27px;
+}
