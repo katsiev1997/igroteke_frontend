@@ -5,16 +5,20 @@ import { useSelector } from 'react-redux';
 import {
   CaretDownOutlined,
   CaretRightOutlined,
+  HomeOutlined,
   LoadingOutlined,
+  PhoneOutlined,
 } from '@ant-design/icons';
 
-import { Status, Time } from 'src/features';
-import { Reserve } from 'src/widgets';
+import { Status, Time } from 'src/widgets';
+import { Reserve } from 'src/features';
 import { clubType, fetchClubs } from 'src/entities/Club';
 import {
   RootState,
   useAppDispatch,
 } from 'src/app/provider/StoreProvider/config/store';
+import { customerAuth } from 'src/entities/Customer';
+import { setTimeReserve } from 'src/features/Reserve';
 
 export const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -27,6 +31,7 @@ export const HomePage: React.FC = () => {
   React.useEffect(() => {
     const getClubs = async () => {
       dispatch(fetchClubs());
+      dispatch(customerAuth());
     };
     getClubs();
   }, [dispatch]);
@@ -56,11 +61,17 @@ export const HomePage: React.FC = () => {
       ) : (
         <div>
           <h2 onClick={() => setOpen(!open)}>
-            {club && club.nameClub}{' '}
+            {club && club.name}{' '}
             <CaretDownOutlined style={{ fontSize: '18px' }} />{' '}
           </h2>
-          <h3>Адрес: {club?.location}</h3>
-          <h3>Телефон: +7{club?.phoneNumber}</h3>
+          <h3>
+            {' '}
+            <HomeOutlined /> {club?.address}
+          </h3>
+          <h3>
+            {' '}
+            <PhoneOutlined /> +7{club?.phone}
+          </h3>
           {open && clubs && (
             <ul>
               {clubs.map((club, i) => (
@@ -68,12 +79,13 @@ export const HomePage: React.FC = () => {
                   key={i}
                   className={cls.list_group_item}
                   onClick={() => {
+                    // dispatch(setTimeReserve(100));
                     setOpen(!open);
                     setRoom(0);
                     setClub(club);
                   }}
                 >
-                  <CaretRightOutlined /> {club.nameClub}
+                  <CaretRightOutlined /> {club.name}
                 </li>
               ))}
             </ul>
@@ -92,9 +104,14 @@ export const HomePage: React.FC = () => {
                 <div>
                   {club.rooms.map((item, i) => (
                     <div
-                      onClick={() => setRoom(i)}
+                      onClick={() => {
+                        dispatch(setTimeReserve(100));
+                        setRoom(i);
+                      }}
                       key={i}
-                      className={room === i ? `${cls.room} ${cls.active}` : cls.room}
+                      className={
+                        room === i ? `${cls.room} ${cls.active}` : cls.room
+                      }
                     >
                       {item.name}
                     </div>
@@ -102,11 +119,9 @@ export const HomePage: React.FC = () => {
                 </div>
 
                 <Reserve
-                  nameClub={club.nameClub}
+                  nameClub={club.name}
                   idClub={club._id}
                   roomNum={room}
-                  from={3}
-                  to={8}
                 />
               </div>
             )}

@@ -1,2 +1,3 @@
 export { Header } from './Header/ui/Header';
-export { Reserve } from './Reserve/ui/Reserve';
+export { Time } from './Time/Time';
+export { Status } from './Status/Status';

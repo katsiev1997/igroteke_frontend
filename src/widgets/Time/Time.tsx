@@ -8,11 +8,11 @@ export const Time = () => {
     <div className={cls.time}>
       {times.map((time, i) => (
         <React.Fragment key={i}>
-          <span>{time}:00 —</span>
-          <span>{time}:30 —</span>
+          <h4>{time}:00 —</h4>
+          <h4>{time}:30 —</h4>
         </React.Fragment>
       ))}
-          <span>00:00 —</span>
+          <h4>00:00 —</h4>
     </div>
   )
 }

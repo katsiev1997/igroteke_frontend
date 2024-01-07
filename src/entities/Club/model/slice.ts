@@ -1,19 +1,17 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import axios from 'axios';
-import { clubType, ClubSliceState, Status } from './types';
+import { clubType, ClubSliceState, StatusClub } from './types';
+import { $api } from 'src/shared/api';
 
 const initialState: ClubSliceState = {
   clubs: [],
-  status: Status.LOADING,
+  status: StatusClub.LOADING,
 };
 
 export const fetchClubs = createAsyncThunk<clubType[]>(
   'clubs/fetchClubsStatus',
   async () => {
-    const { data } = await axios.get<clubType[]>(
-      'http://localhost:5000/api/clubs'
-    );
+    const { data } = await $api.get<clubType[]>('/clubs');
     return data;
   }
 );
@@ -28,18 +26,18 @@ const clubSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchClubs.pending, (state) => {
-      state.status = Status.LOADING;
+      state.status = StatusClub.LOADING;
       state.clubs = [];
     });
     builder.addCase(
       fetchClubs.fulfilled,
       (state, action: PayloadAction<clubType[]>) => {
-        state.status = Status.SUCCESS;
+        state.status = StatusClub.SUCCESS;
         state.clubs = action.payload;
       }
     );
     builder.addCase(fetchClubs.rejected, (state) => {
-      state.status = Status.ERROR;
+      state.status = StatusClub.ERROR;
       state.clubs = [];
     });
   },

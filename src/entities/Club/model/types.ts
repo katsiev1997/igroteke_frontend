@@ -1,6 +1,7 @@
 interface bookingType {
   customerId: string;
-  timeSlots: number[];
+  from: number;
+  to: number;
 }
 
 interface roomsType {
@@ -11,14 +12,14 @@ interface roomsType {
 
 export interface clubType {
   _id: string;
-  phoneNumber: string;
-  nameClub: string;
-  location: string;
+  phone: string;
+  name: string;
+  address: string;
   roomsNumber: number;
   rooms: roomsType[];
 }
 
-export enum Status {
+export enum StatusClub {
   LOADING = 'loading',
   SUCCESS = 'success',
   ERROR = 'error',
@@ -26,5 +27,5 @@ export enum Status {
 
 export interface ClubSliceState {
   clubs: clubType[];
-  status: Status;
+  status: StatusClub;
 }
