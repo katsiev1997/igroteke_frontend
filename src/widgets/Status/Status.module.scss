@@ -26,7 +26,15 @@
   background: linear-gradient(
     270deg,
     rgba(255, 0, 0, 0) -1.43%,
-    rgba(0, 85, 255, 0.6) 100%
+    rgba(0, 42, 255, 0.6) 100%
+  );
+}
+.active {
+  border: 3px solid #2200ff;
+  background: linear-gradient(
+    270deg,
+    rgba(242, 0, 255, 0) -1.43%,
+    #00ff0896 100%
   );
 }
 .status {

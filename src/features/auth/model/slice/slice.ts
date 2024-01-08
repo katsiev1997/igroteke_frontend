@@ -32,7 +32,7 @@ export const customerAuth = createAsyncThunk('customer/auth', async () => {
     console.log(error.response.data.message);
   }
 });
-export const customerLogout = createAsyncThunk('customer/logout', async () => {
+export const customerLogout = createAsyncThunk<any>('customer/logout', async () => {
   try {
     const res = await $api.post('/logout');
     console.log(res.data.message);

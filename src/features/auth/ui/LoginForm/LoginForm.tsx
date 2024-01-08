@@ -20,7 +20,7 @@ export const LoginForm = () => {
   
   const loginFetch = (values: customerData | adminData) => {
     dispatch(customerLogin(values))
-    setTimeout(() => navigate('/'), 500)
+    setTimeout(() => navigate('/'), 1000)
   };
   console.log(isAdmin);
   return (

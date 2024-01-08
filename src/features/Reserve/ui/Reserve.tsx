@@ -26,7 +26,9 @@ export const Reserve: React.FC<IReservationProps> = (props) => {
   const dispatch = useAppDispatch();
   const [messageApi, contextHolder] = message.useMessage();
   const [open, setOpen] = React.useState<boolean>(false);
-  const club = customer?.booking && clubs.filter((club) => club._id === customer?.booking.clubId);
+  const club =
+    customer?.booking &&
+    clubs.filter((club) => club._id === customer?.booking.clubId);
   const successMessage = (text: string) => {
     messageApi.open({
       type: 'success',
@@ -59,7 +61,7 @@ export const Reserve: React.FC<IReservationProps> = (props) => {
   const { nameClub, idClub, roomNum } = props;
   const createReserve = async () => {
     if (from === null || to === null) {
-      errorMessage('Выберите время для бронирования!');
+      errorMessage('Выберите время бронирования!');
       return;
     }
     $api
@@ -75,7 +77,7 @@ export const Reserve: React.FC<IReservationProps> = (props) => {
           dispatch(customerAuth());
           dispatch(fetchClubs());
           dispatch(setTimeReserve(100));
-        }, 1500);
+        }, 1000);
         setOpen(false);
       })
       .catch((error) => {
@@ -113,7 +115,7 @@ export const Reserve: React.FC<IReservationProps> = (props) => {
           src='https://img.icons8.com/?size=160&id=79996&format=png'
           alt=''
         />
-        Reserve
+        <h4>Reserve</h4>
       </button>
       {customer?.booking ? (
         <div
@@ -134,10 +136,14 @@ export const Reserve: React.FC<IReservationProps> = (props) => {
           <h3>Клиент +7{customer?.phone}</h3>
           <h4>Клуб: {club && club[0].name}</h4>
           <h4>Комната: {Number(customer.booking.room) + 1}</h4>
-            <h4>С {times[customer.booking.from].label} до {times[customer.booking.to].label}</h4>
+          <h3>
+            С {times[customer.booking.from].label} до{' '}
+            {times[customer.booking.to].label}
+          </h3>
           <Button
             onClick={deleteReserve}
-            style={{ background: '#fefefe', width: '50%', color: 'red' }}
+            size='large'
+            style={{ background: '#fefefe', color: 'red', marginTop: '20px' }}
           >
             Удалить бронь
           </Button>
@@ -161,10 +167,19 @@ export const Reserve: React.FC<IReservationProps> = (props) => {
           <h3>Клиент: +7{customer?.phone}</h3>
           <h4>Клуб: {nameClub}</h4>
           <h4>Комната: {roomNum + 1}</h4>
-            {from && to && (
-                <h3>С {times[from].label} до {times[to + 1].label}</h3>
-            )}
-          <Button onClick={createReserve} size='large' type='primary'>
+          {from !== null && to !== null ? (
+            <h3>
+              С {times[from].label} до {times[to + 1].label}
+            </h3>
+          ) : (
+            <h3>Укажите время брони!</h3>
+          )}
+          <Button
+            onClick={createReserve}
+            size='large'
+            type='primary'
+            style={{ marginTop: '20px' }}
+          >
             Забронировать
           </Button>
         </div>

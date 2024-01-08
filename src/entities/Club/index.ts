@@ -1,5 +1,5 @@
 export { club } from './model/slice'
 export { fetchClubs } from './model/slice'
 export { type clubType } from './model/types'
-export { type Status } from './model/types'
+export { type StatusClub } from './model/types'
 export { type ClubSliceState } from './model/types'

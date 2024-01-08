@@ -14,8 +14,10 @@ interface StatusProps {
 export const Status: React.FC<StatusProps> = ({ timeSlots }) => {
   const dispatch = useAppDispatch();
   const { from, to } = useSelector((state: RootState) => state.reserve);
-  console.log(from, to);
+  const { customer } = useSelector((state: RootState) => state.customer);
   const setTime = (time: number) => {
+    if (!customer) return;
+    if (customer.booking !== null) return;
     dispatch(setTimeReserve(time));
   };
   return (
@@ -24,8 +26,12 @@ export const Status: React.FC<StatusProps> = ({ timeSlots }) => {
         <div
           onClick={() => setTime(i)}
           key={i}
-          className={from && to && from <= i && i <= to ? `${cls.status_slot} ${cls.reserve}` :
-            status
+          className={
+            from !== null && to != null && from <= i && i <= to
+              ? `${cls.status_slot} ${cls.reserve}`
+              : i === from
+              ? `${cls.status_slot} ${cls.active}`
+              : status
               ? `${cls.status_slot} ${cls.free}`
               : `${cls.status_slot} ${cls.occupied}`
           }
