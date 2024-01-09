@@ -4,14 +4,12 @@ import { Button, message } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import { times } from '../model/consts/times';
 import { useSelector } from 'react-redux';
-import {
-  RootState,
-  useAppDispatch,
-} from 'src/app/provider/StoreProvider/config/store';
 import { $api } from 'src/shared/api';
 import { fetchClubs } from 'src/entities/Club';
-import { customerAuth } from 'src/entities/Customer';
 import { setTimeReserve } from '..';
+import { StateSchema } from 'src/app/provider/StoreProvider/config/StateSchema';
+import { useAppDispatch } from 'src/shared/hooks/useAppDispatch';
+import { getAuthData } from 'src/entities/Customer';
 
 interface IReservationProps {
   nameClub: string;
@@ -20,9 +18,9 @@ interface IReservationProps {
 }
 
 export const Reserve: React.FC<IReservationProps> = (props) => {
-  const { clubs } = useSelector((state: RootState) => state.club);
-  const { customer } = useSelector((state: RootState) => state.customer);
-  const { from, to } = useSelector((state: RootState) => state.reserve);
+  const { clubs } = useSelector((state: StateSchema) => state.club);
+  const { customer } = useSelector((state: StateSchema) => state.customer);
+  const { from, to } = useSelector((state: StateSchema) => state.reserve);
   const dispatch = useAppDispatch();
   const [messageApi, contextHolder] = message.useMessage();
   const [open, setOpen] = React.useState<boolean>(false);
@@ -74,7 +72,7 @@ export const Reserve: React.FC<IReservationProps> = (props) => {
       .then((res) => {
         successMessage(res.data.message);
         setTimeout(() => {
-          dispatch(customerAuth());
+          dispatch(getAuthData());
           dispatch(fetchClubs());
           dispatch(setTimeReserve(100));
         }, 1000);
@@ -83,7 +81,7 @@ export const Reserve: React.FC<IReservationProps> = (props) => {
       .catch((error) => {
         errorMessage(error.response.data.message);
         setTimeout(() => {
-          dispatch(customerAuth());
+          dispatch(getAuthData());
           dispatch(fetchClubs());
           dispatch(setTimeReserve(100));
         }, 1500);
@@ -96,7 +94,7 @@ export const Reserve: React.FC<IReservationProps> = (props) => {
       .then((res) => {
         successMessage(res.data.message);
         setTimeout(() => {
-          dispatch(customerAuth());
+          dispatch(getAuthData());
           dispatch(fetchClubs());
         }, 1500);
         setOpen(false);
@@ -132,7 +130,7 @@ export const Reserve: React.FC<IReservationProps> = (props) => {
             }}
             onClick={() => setOpen(false)}
           />
-          <h2>Бронирование</h2>
+          <h2>Ваша бронь</h2>
           <h3>Клиент +7{customer?.phone}</h3>
           <h4>Клуб: {club && club[0].name}</h4>
           <h4>Комната: {Number(customer.booking.room) + 1}</h4>

@@ -1,11 +1,9 @@
 import React from 'react';
 import cls from './Status.module.scss';
-import {
-  RootState,
-  useAppDispatch,
-} from 'src/app/provider/StoreProvider/config/store';
 import { setTimeReserve } from 'src/features/Reserve';
 import { useSelector } from 'react-redux';
+import { StateSchema } from 'src/app/provider/StoreProvider/config/StateSchema';
+import { useAppDispatch } from 'src/shared/hooks/useAppDispatch';
 
 interface StatusProps {
   timeSlots: boolean[];
@@ -13,8 +11,8 @@ interface StatusProps {
 
 export const Status: React.FC<StatusProps> = ({ timeSlots }) => {
   const dispatch = useAppDispatch();
-  const { from, to } = useSelector((state: RootState) => state.reserve);
-  const { customer } = useSelector((state: RootState) => state.customer);
+  const { from, to } = useSelector((state: StateSchema) => state.reserve);
+  const { customer } = useSelector((state: StateSchema) => state.customer);
   const setTime = (time: number) => {
     if (!customer) return;
     if (customer.booking !== null) return;
@@ -30,7 +28,7 @@ export const Status: React.FC<StatusProps> = ({ timeSlots }) => {
             from !== null && to != null && from <= i && i <= to
               ? `${cls.status_slot} ${cls.reserve}`
               : i === from
-              ? `${cls.status_slot} ${cls.active}`
+              ? `${cls.status_slot} ${cls.reserve}`
               : status
               ? `${cls.status_slot} ${cls.free}`
               : `${cls.status_slot} ${cls.occupied}`

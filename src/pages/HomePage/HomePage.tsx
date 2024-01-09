@@ -13,16 +13,13 @@ import {
 import { Status, Time } from 'src/widgets';
 import { Reserve } from 'src/features';
 import { clubType, fetchClubs } from 'src/entities/Club';
-import {
-  RootState,
-  useAppDispatch,
-} from 'src/app/provider/StoreProvider/config/store';
-import { customerAuth } from 'src/entities/Customer';
 import { setTimeReserve } from 'src/features/Reserve';
+import { useAppDispatch } from 'src/shared/hooks/useAppDispatch';
+import { StateSchema } from 'src/app/provider/StoreProvider/config/StateSchema';
 
 export const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { clubs, status } = useSelector((state: RootState) => state.club);
+  const { clubs, status } = useSelector((state: StateSchema) => state.club);
 
   const [open, setOpen] = React.useState<boolean>(false);
   const [room, setRoom] = React.useState<number>(0);
@@ -31,7 +28,6 @@ export const HomePage: React.FC = () => {
   React.useEffect(() => {
     const getClubs = async () => {
       dispatch(fetchClubs());
-      dispatch(customerAuth());
     };
     getClubs();
   }, [dispatch]);

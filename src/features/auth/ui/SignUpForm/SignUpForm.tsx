@@ -8,21 +8,27 @@ import { Button, Checkbox, Form, Input, message } from 'antd';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import React from 'react';
 import cls from './SignUpForm.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { customerData } from '../../model/types/customer';
 import { adminData } from '../../model/types/admin';
-import { $api } from 'src/shared/api';
+import { customerSignup } from '../..';
+import { useAppDispatch } from 'src/shared/hooks/useAppDispatch';
+import { useSelector } from 'react-redux';
+import { StateSchema } from 'src/app/provider/StoreProvider/config/StateSchema';
 
 export const SignUpForm = () => {
   const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
   const [messageApi, contextHolder] = message.useMessage();
+  const error = useSelector((state: StateSchema) => state.auth.error);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const successMessage = (text: string) => {
     messageApi.open({
       type: 'success',
       content: text,
       style: {
         fontSize: '16px',
-        marginTop: '20vh',
+        marginTop: '22vh',
       },
     });
   };
@@ -32,25 +38,21 @@ export const SignUpForm = () => {
       content: text,
       style: {
         fontSize: '16px',
-        marginTop: '20vh',
+        marginTop: '22vh',
       },
     });
   };
-  const fetchSignup = async (values: customerData | adminData) => {
-    if (isAdmin) {
-      console.log(isAdmin);
-    } else {
-      const { phone, password, confirmPassword, code } = values;
-      if (password !== confirmPassword) {
-        errorMessage('Пароли не совпадают');
-        return;
-      }
-      try {
-        const res = await $api.post('/signup', { phone, password, code });
-        successMessage(res.data.message);
-      } catch (error: any) {
-        errorMessage(error.response.data.message);
-      }
+  const onSubmit = async (values: customerData | adminData) => {
+    const res = await dispatch(customerSignup(values));
+    const { password, confirmPassword } = values;
+    if (password !== confirmPassword) {
+      errorMessage('Пароли не совпадают!');
+    }
+    if (res.meta.requestStatus === 'fulfilled') {
+      successMessage('Вы успешно зарегистрировались!');
+      setTimeout(() => {
+        navigate('/login');
+      }, 1500);
     }
   };
   const tailFormItemLayout = {
@@ -75,7 +77,7 @@ export const SignUpForm = () => {
         name='normal_login'
         className='login-form'
         initialValues={{ remember: true }}
-        onFinish={fetchSignup}
+        onFinish={onSubmit}
       >
         <Form.Item
           name='phone'
@@ -93,6 +95,7 @@ export const SignUpForm = () => {
                 <PhoneOutlined className='site-form-item-icon' /> +7
               </div>
             }
+            size='large'
             placeholder='Номер телефона...'
           />
         </Form.Item>
@@ -102,6 +105,7 @@ export const SignUpForm = () => {
         >
           <Input
             prefix={<LockOutlined className='site-form-item-icon' />}
+            size='large'
             type='password'
             placeholder='Пароль...'
           />
@@ -112,6 +116,7 @@ export const SignUpForm = () => {
         >
           <Input
             prefix={<LockOutlined className='site-form-item-icon' />}
+            size='large'
             type='password'
             placeholder='Повторите пароль...'
           />
@@ -122,6 +127,7 @@ export const SignUpForm = () => {
         >
           <Input
             prefix={<CheckCircleOutlined className='site-form-item-icon' />}
+            size='large'
             placeholder='Проверочный код...'
           />
         </Form.Item>
@@ -142,7 +148,7 @@ export const SignUpForm = () => {
           </Form.Item>
         )}
         <Form.Item>
-          <Checkbox onChange={onChange} style={{ color: '#fff' }}>
+          <Checkbox onChange={onChange} style={{ color: '#fff', fontSize: '16px' }}>
             Администратор
           </Checkbox>
         </Form.Item>
@@ -152,8 +158,20 @@ export const SignUpForm = () => {
             Войти сейчас!
           </Link>
         </Form.Item>
+        {error && (
+          <Form.Item
+            style={{
+              color: 'red',
+              backgroundColor: '#fff',
+              textAlign: 'center',
+              borderRadius: '5px',
+            }}
+          >
+            <p>{error}</p>
+          </Form.Item>
+        )}
         <Form.Item {...tailFormItemLayout}>
-          <Button type='primary' htmlType='submit'>
+          <Button type='primary' htmlType='submit' size='large'>
             Зарегистрироваться
           </Button>
         </Form.Item>

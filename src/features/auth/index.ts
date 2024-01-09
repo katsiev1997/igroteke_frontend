@@ -1,3 +1,6 @@
 export { LoginForm } from './ui/LoginForm/LoginForm';
 export { SignUpForm } from './ui/SignUpForm/SignUpForm';
-export { customerLogout } from './model/slice/slice'
+
+export { customerLogin } from './model/service/customerLogin';
+export { customerSignup } from './model/service/customerSignup';
+export { auth } from './model/slice/authSlice';

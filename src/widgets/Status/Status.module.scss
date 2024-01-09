@@ -23,20 +23,14 @@
   );
 }
 .reserve {
+  transition: all 0.5s;
   background: linear-gradient(
     270deg,
     rgba(255, 0, 0, 0) -1.43%,
-    rgba(0, 42, 255, 0.6) 100%
+    rgba(255, 174, 0, 0.818) 100%
   );
 }
-.active {
-  border: 3px solid #2200ff;
-  background: linear-gradient(
-    270deg,
-    rgba(242, 0, 255, 0) -1.43%,
-    #00ff0896 100%
-  );
-}
+
 .status {
-  margin-top: 27px;
+  margin-top: 26px;
 }

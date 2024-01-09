@@ -1,6 +1,9 @@
 import {
-  CheckCircleOutlined, FieldNumberOutlined, HomeOutlined,
-  PhoneOutlined, UserOutlined
+  CheckCircleOutlined,
+  FieldNumberOutlined,
+  HomeOutlined,
+  PhoneOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, message } from 'antd';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
@@ -94,6 +97,7 @@ export const CreateClubPage: React.FC = () => {
             <Input
               prefix={<PhoneOutlined className='site-form-item-icon' />}
               placeholder='Номер телефона'
+              size='large'
             />
           </Form.Item>
           <Form.Item
@@ -107,6 +111,7 @@ export const CreateClubPage: React.FC = () => {
           >
             <Input
               prefix={<UserOutlined className='site-form-item-icon' />}
+              size='large'
               placeholder='Название клуба'
             />
           </Form.Item>
@@ -121,6 +126,7 @@ export const CreateClubPage: React.FC = () => {
           >
             <Input
               prefix={<HomeOutlined className='site-form-item-icon' />}
+              size='large'
               placeholder='Адрес'
             />
           </Form.Item>
@@ -135,6 +141,7 @@ export const CreateClubPage: React.FC = () => {
           >
             <Input
               prefix={<FieldNumberOutlined className='site-form-item-icon' />}
+              size='large'
               placeholder='Количество мест'
             />
           </Form.Item>
@@ -144,16 +151,22 @@ export const CreateClubPage: React.FC = () => {
           >
             <Input
               prefix={<CheckCircleOutlined className='site-form-item-icon' />}
+              size='large'
               placeholder='Проверочный код'
             />
           </Form.Item>
           <Form.Item>
-            <Checkbox onChange={onChange} style={{ color: '#fff' }}>
+            <Checkbox onChange={onChange} style={{ color: '#fff', fontSize: '12px' }}>
               Я подтверждаю, что все поля заполнены верно.
             </Checkbox>
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
-            <Button disabled={!disable} type='primary' htmlType='submit'>
+            <Button
+              disabled={!disable}
+              type='primary'
+              htmlType='submit'
+              size='large'
+            >
               Зарегистрировать клуб
             </Button>
           </Form.Item>

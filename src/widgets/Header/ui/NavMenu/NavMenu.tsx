@@ -2,18 +2,15 @@ import { BarsOutlined } from '@ant-design/icons';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import cls from './NavMenu.module.scss';
-import { customerLogout } from 'src/features/auth';
-import {
-  RootState,
-  useAppDispatch,
-} from 'src/app/provider/StoreProvider/config/store';
+import { customerLogout } from 'src/entities/Customer';
 import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'src/shared/hooks/useAppDispatch';
+import { StateSchema } from 'src/app/provider/StoreProvider/config/StateSchema';
 
 export const NavMenu: React.FC = () => {
   const [open, setOpen] = React.useState(false);
   const dispatch = useAppDispatch();
-  const { customer } = useSelector((state: RootState) => state.customer);
-
+  const { customer } = useSelector((state: StateSchema) => state.customer);
   const logoutFetch = () => {
     dispatch(customerLogout());
   };

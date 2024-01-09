@@ -1,2 +1,3 @@
-export { customer } from '../../features/auth/model/slice/slice';
-export { customerAuth } from '../../features/auth/model/slice/slice';
+export { customer } from './model/slice/customerSlice'
+export { customerLogout } from './model/service/customerLogout'
+export { getAuthData } from './model/service/getAuthData'
