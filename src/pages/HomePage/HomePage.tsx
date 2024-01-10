@@ -4,7 +4,6 @@ import cls from './HomePage.module.scss';
 
 import {
   HomeOutlined,
-  LoadingOutlined,
   PhoneOutlined,
 } from '@ant-design/icons';
 
@@ -15,6 +14,7 @@ import { Reserve } from 'src/features';
 import { setClub, setRoom, setTimeReserve } from 'src/features/Reserve';
 import { useAppDispatch } from 'src/shared/hooks/useAppDispatch';
 import { Status, Time } from 'src/widgets';
+import { Loading } from 'src/shared/ui/Loading/Loading';
 
 export const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -50,11 +50,7 @@ export const HomePage: React.FC = () => {
           </p>
         </div>
       ) : status === 'loading' ? (
-        <div>
-          <h2>
-            Loading ... <LoadingOutlined style={{ fontSize: '40px' }} />
-          </h2>
-        </div>
+          <Loading />
       ) : (
         <div>
           <Select
@@ -64,8 +60,8 @@ export const HomePage: React.FC = () => {
             className={cls.clubName}
             popupClassName={cls.clubName}
             style={{
-              width: 340,
               height: 50,
+              display: 'flex', 
               margin: '15px auto',
             }}
             placeholder={`Клуб: ${Club?.name}`}

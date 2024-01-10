@@ -10,10 +10,12 @@ import { useAppDispatch } from 'src/shared/hooks/useAppDispatch';
 import { customerLogin } from '../..';
 import { StateSchema } from 'src/app/provider/StoreProvider/config/StateSchema';
 import { useSelector } from 'react-redux';
+import { Loading } from 'src/shared/ui/Loading/Loading';
 
 export const LoginForm = () => {
   const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
   const error = useSelector((state: StateSchema) => state.auth.error);
+  const loading = useSelector((state: StateSchema) => state.auth.loading);
   const dispatch = useAppDispatch();
   const onChange = (e: CheckboxChangeEvent) => {
     setIsAdmin(e.target.checked);
@@ -41,6 +43,7 @@ export const LoginForm = () => {
   console.log(isAdmin);
   return (
     <div className={cls.form}>
+      {loading && <Loading />}
       {contextHolder}
       <Form
         name='normal_login'

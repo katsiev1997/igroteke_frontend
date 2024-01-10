@@ -115,4 +115,20 @@ export const times = [
 		value: 28,
 		label: '0:00',
 	},
+	{
+		value: 29,
+		label: '0:30',
+	},
+	{
+		value: 30,
+		label: '1:00',
+	},
+	{
+		value: 31,
+		label: '1:30',
+	},
+	{
+		value: 32,
+		label: '2:00',
+	},
 ];

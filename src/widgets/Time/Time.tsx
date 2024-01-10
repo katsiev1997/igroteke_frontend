@@ -1,7 +1,7 @@
 import React from "react"
 import cls from './Time.module.scss'
 
-const times: number[] = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+const times: number[] = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0, 1]
 
 export const Time = () => {
   return (
@@ -12,7 +12,7 @@ export const Time = () => {
           <h4>{time}:30 —</h4>
         </React.Fragment>
       ))}
-          <h4>00:00 —</h4>
+          <h4>2:00 —</h4>
     </div>
   )
 }

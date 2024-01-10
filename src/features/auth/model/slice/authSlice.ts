@@ -20,9 +20,9 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = '';
     });
-    builder.addCase(customerSignup.rejected, (state) => {
+    builder.addCase(customerSignup.rejected, (state, action) => {
       state.loading = false;
-      // state.error = action.payload;
+      state.error = action.payload as string;
     });
     builder.addCase(customerLogin.pending, (state) => {
       state.loading = true;
@@ -31,9 +31,9 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = '';
     });
-    builder.addCase(customerLogin.rejected, (state) => {
+    builder.addCase(customerLogin.rejected, (state, action) => {
       state.loading = false;
-      // state.error = action.payload;
+      state.error = action.payload as string;
     });
   },
 });

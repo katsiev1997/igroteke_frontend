@@ -15,11 +15,13 @@ import { customerSignup } from '../..';
 import { useAppDispatch } from 'src/shared/hooks/useAppDispatch';
 import { useSelector } from 'react-redux';
 import { StateSchema } from 'src/app/provider/StoreProvider/config/StateSchema';
+import { Loading } from 'src/shared/ui/Loading/Loading';
 
 export const SignUpForm = () => {
   const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
   const [messageApi, contextHolder] = message.useMessage();
   const error = useSelector((state: StateSchema) => state.auth.error);
+  const loading = useSelector((state: StateSchema) => state.auth.loading);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const successMessage = (text: string) => {
@@ -73,6 +75,7 @@ export const SignUpForm = () => {
   return (
     <div className={cls.form}>
       {contextHolder}
+      {loading && <Loading />}
       <Form
         name='normal_login'
         className='login-form'
