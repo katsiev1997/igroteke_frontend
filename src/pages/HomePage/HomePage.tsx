@@ -3,8 +3,6 @@ import cls from './HomePage.module.scss';
 import { useSelector } from 'react-redux';
 
 import {
-  CaretDownOutlined,
-  CaretRightOutlined,
   HomeOutlined,
   LoadingOutlined,
   PhoneOutlined,
@@ -12,31 +10,34 @@ import {
 
 import { Status, Time } from 'src/widgets';
 import { Reserve } from 'src/features';
-import { clubType, fetchClubs } from 'src/entities/Club';
-import { setTimeReserve } from 'src/features/Reserve';
+import { fetchClubs } from 'src/entities/Club';
+import { setClub, setRoom, setTimeReserve } from 'src/features/Reserve';
 import { useAppDispatch } from 'src/shared/hooks/useAppDispatch';
 import { StateSchema } from 'src/app/provider/StoreProvider/config/StateSchema';
+import { Select } from 'antd';
 
 export const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { clubs, status } = useSelector((state: StateSchema) => state.club);
-
-  const [open, setOpen] = React.useState<boolean>(false);
-  const [room, setRoom] = React.useState<number>(0);
-  const [club, setClub] = React.useState<clubType>();
-
+  const { club, room } =useSelector((state: StateSchema) => state.reserve);
+  const Club = clubs[club]
   React.useEffect(() => {
-    const getClubs = async () => {
-      dispatch(fetchClubs());
-    };
-    getClubs();
+    const getClubs = () => {
+     dispatch(fetchClubs());
+    }
+      getClubs()
   }, [dispatch]);
 
   React.useEffect(() => {
     if (clubs && clubs.length > 0) {
-      setClub(clubs[0]);
+      (Club);
     }
-  }, [clubs]);
+  }, [clubs, Club]);
+
+  const clubNames = clubs.map((club, i) => ({
+    value: i,
+    label: `Клуб: ${club.name}`,
+  }));
 
   return (
     <main>
@@ -56,53 +57,53 @@ export const HomePage: React.FC = () => {
         </div>
       ) : (
         <div>
-          <h2 onClick={() => setOpen(!open)}>
-            {club && club.name}{' '}
-            <CaretDownOutlined style={{ fontSize: '18px' }} />{' '}
-          </h2>
-          <h3>
+          <Select
+            showSearch
+            size='large'
+            style={{ width: 300, margin: '10px' }}
+            placeholder={`Клуб: ${Club?.name}`}
+            className={cls.clubName}
+            popupClassName={cls.clubName}
+            onChange={(i) => {
+              dispatch(setRoom(0))
+              dispatch(setClub(i))
+            } }
+            optionFilterProp='children'
+            filterOption={(input, option) =>
+              (option?.label ?? '').includes(input)
+            }
+            filterSort={(optionA, optionB) =>
+              (optionA?.label ?? '')
+                .toLowerCase()
+                .localeCompare((optionB?.label ?? '').toLowerCase())
+            }
+            options={clubNames}
+          />
+          <p>
             {' '}
-            <HomeOutlined /> {club?.address}
-          </h3>
-          <h3>
+            <HomeOutlined /> {Club?.address}
+          </p>
+          <p className={cls.phone}>
             {' '}
-            <PhoneOutlined /> +7{club?.phone}
-          </h3>
-          {open && clubs && (
-            <ul>
-              {clubs.map((club, i) => (
-                <li
-                  key={i}
-                  className={cls.list_group_item}
-                  onClick={() => {
-                    // dispatch(setTimeReserve(100));
-                    setOpen(!open);
-                    setRoom(0);
-                    setClub(club);
-                  }}
-                >
-                  <CaretRightOutlined /> {club.name}
-                </li>
-              ))}
-            </ul>
-          )}
+            <PhoneOutlined /> +7{Club?.phone}
+          </p>
           <hr />
           <div className={cls.time_status_rooms}>
-            {club && (
+            {Club && (
               <div className={cls.time_status}>
                 <Time />
-                <Status timeSlots={club.rooms[room].availableTimeSlots} />
+                <Status timeSlots={Club.rooms[room].availableTimeSlots} />
               </div>
             )}
-            {club && club.rooms && (
+            {Club && Club.rooms && (
               <div className={cls.play_rooms}>
                 <h3>Play room </h3>
                 <div>
-                  {club.rooms.map((item, i) => (
+                  {Club.rooms.map((item, i) => (
                     <div
                       onClick={() => {
                         dispatch(setTimeReserve(100));
-                        setRoom(i);
+                        dispatch(setRoom(i));
                       }}
                       key={i}
                       className={
@@ -115,8 +116,8 @@ export const HomePage: React.FC = () => {
                 </div>
 
                 <Reserve
-                  nameClub={club.name}
-                  idClub={club._id}
+                  nameClub={Club.name}
+                  idClub={Club._id}
                   roomNum={room}
                 />
               </div>

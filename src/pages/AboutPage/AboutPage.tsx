@@ -1,5 +1,5 @@
 
-export const AboutPage = () => {
+const AboutPage = () => {
   return (
     <div>
       <h2>О сайте</h2>
@@ -13,3 +13,5 @@ export const AboutPage = () => {
     </div>
   )
 }
+
+export default AboutPage

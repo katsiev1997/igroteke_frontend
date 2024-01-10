@@ -1,15 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { timeReserveType } from '../types/timeReserveType';
+import { ReserveType } from '../types/ReserveType';
 
-const initialState: timeReserveType = {
+const initialState: ReserveType = {
+  club: 0,
+  room: 0,
   from: null,
   to: null,
 };
 
 const reserveSlice = createSlice({
-  name: 'timeReserve',
+  name: 'reserve',
   initialState,
   reducers: {
+    setClub: (state, action) => {
+      state.club = action.payload
+    },
+    setRoom: (state, action) => {
+      state.room = action.payload
+    },
     setTimeReserve: (state, action) => {
       if (action.payload === 100) {
         state.from = null;
@@ -29,6 +37,6 @@ const reserveSlice = createSlice({
   },
 });
 
-export const { setTimeReserve } = reserveSlice.actions;
+export const { setTimeReserve, setClub, setRoom } = reserveSlice.actions;
 
 export const reserve = reserveSlice.reducer;

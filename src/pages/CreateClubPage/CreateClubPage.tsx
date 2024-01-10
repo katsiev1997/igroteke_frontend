@@ -19,7 +19,7 @@ interface IValues {
   code: string;
 }
 
-export const CreateClubPage: React.FC = () => {
+const CreateClubPage: React.FC = () => {
   const [disable, setDisable] = React.useState<boolean>(false);
   const [messageApi, contextHolder] = message.useMessage();
   const successMessage = (text: string) => {
@@ -175,3 +175,5 @@ export const CreateClubPage: React.FC = () => {
     </div>
   );
 };
+
+export default CreateClubPage

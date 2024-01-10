@@ -1,21 +1,20 @@
+import { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import {
-  AboutPage,
-  CreateClubPage,
-  HomePage,
-  LoginPage,
-  SignUpPage,
+  HomePage, LazyAboutPage, LazyCreateClubPage, LazyLoginPage, LazySignUpPage
 } from 'src/pages';
 
 const RouteProvider = () => {
   return (
-    <Routes>
-      <Route path='/' element={<HomePage />} />
-      <Route path='/login' element={<LoginPage />} />
-      <Route path='/signup' element={<SignUpPage />} />
-      <Route path='/create_club' element={<CreateClubPage />} />
-      <Route path='/about' element={<AboutPage />} />
-    </Routes>
+    <Suspense fallback={<p className='loading'> Loading ... </p>}>
+      <Routes>
+        <Route path='/' element={<HomePage />} />
+        <Route path='/login' element={<LazyLoginPage />} />
+        <Route path='/signup' element={<LazySignUpPage />} />
+        <Route path='/create_club' element={<LazyCreateClubPage />} />
+        <Route path='/about' element={<LazyAboutPage />} />
+      </Routes>
+    </Suspense>
   );
 };
 
