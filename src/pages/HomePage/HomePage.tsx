@@ -98,7 +98,7 @@ export const HomePage: React.FC = () => {
             )}
             {Club && Club.rooms && (
               <div className={cls.play_rooms}>
-                <h3>Play room </h3>
+                <h3 className={cls.play_room_text}>Play room </h3>
                 <div>
                   {Club.rooms.map((item, i) => (
                     <div
