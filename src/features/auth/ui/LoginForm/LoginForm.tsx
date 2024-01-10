@@ -101,17 +101,19 @@ export const LoginForm = () => {
           </Form.Item>
         )}
         <Form.Item>
-          <Button
+          <span style={{ color: '#fff' }}> У вас нет аккаунта?  </span>{' '}
+          <Link style={{ color: '#09f' }} to='/signup'>
+            Зарегистрироваться сейчас!
+          </Link>
+        </Form.Item>
+        <Form.Item>
+        <Button
             type='primary'
             htmlType='submit'
             className='login-form-button'
           >
             Войти
           </Button>
-          <span style={{ color: '#fff' }}> или </span>{' '}
-          <Link style={{ color: '#09f' }} to='/signup'>
-            Зарегистрироваться сейчас!
-          </Link>
         </Form.Item>
       </Form>
     </div>

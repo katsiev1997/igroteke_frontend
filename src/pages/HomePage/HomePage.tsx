@@ -115,7 +115,6 @@ export const HomePage: React.FC = () => {
                     </div>
                   ))}
                 </div>
-
                 <Reserve
                   nameClub={Club.name}
                   idClub={Club._id}
