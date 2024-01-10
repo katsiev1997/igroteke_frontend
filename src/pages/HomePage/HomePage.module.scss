@@ -49,5 +49,17 @@ li {
   font-size: 25px;
 }
 .clubName {
-  filter: invert(0%);
+  filter: invert(85%);
+  & input {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  & span {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  & div {
+    font-size: 20px;
+    font-weight: 700;
+  }
 }

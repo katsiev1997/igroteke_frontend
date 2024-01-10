@@ -1,6 +1,6 @@
 import React from 'react';
-import cls from './HomePage.module.scss';
 import { useSelector } from 'react-redux';
+import cls from './HomePage.module.scss';
 
 import {
   HomeOutlined,
@@ -8,29 +8,29 @@ import {
   PhoneOutlined,
 } from '@ant-design/icons';
 
-import { Status, Time } from 'src/widgets';
-import { Reserve } from 'src/features';
+import { Select } from 'antd';
+import { StateSchema } from 'src/app/provider/StoreProvider/config/StateSchema';
 import { fetchClubs } from 'src/entities/Club';
+import { Reserve } from 'src/features';
 import { setClub, setRoom, setTimeReserve } from 'src/features/Reserve';
 import { useAppDispatch } from 'src/shared/hooks/useAppDispatch';
-import { StateSchema } from 'src/app/provider/StoreProvider/config/StateSchema';
-import { Select } from 'antd';
+import { Status, Time } from 'src/widgets';
 
 export const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { clubs, status } = useSelector((state: StateSchema) => state.club);
-  const { club, room } =useSelector((state: StateSchema) => state.reserve);
-  const Club = clubs[club]
+  const { club, room } = useSelector((state: StateSchema) => state.reserve);
+  const Club = clubs[club];
   React.useEffect(() => {
     const getClubs = () => {
-     dispatch(fetchClubs());
-    }
-      getClubs()
+      dispatch(fetchClubs());
+    };
+    getClubs();
   }, [dispatch]);
 
   React.useEffect(() => {
     if (clubs && clubs.length > 0) {
-      (Club);
+      Club;
     }
   }, [clubs, Club]);
 
@@ -60,14 +60,19 @@ export const HomePage: React.FC = () => {
           <Select
             showSearch
             size='large'
-            style={{ width: 300, margin: '10px' }}
-            placeholder={`Клуб: ${Club?.name}`}
+            dropdownRender={(value) => <h2>{value}</h2>}
             className={cls.clubName}
             popupClassName={cls.clubName}
+            style={{
+              width: 340,
+              height: 50,
+              margin: '15px auto',
+            }}
+            placeholder={`Клуб: ${Club?.name}`}
             onChange={(i) => {
-              dispatch(setRoom(0))
-              dispatch(setClub(i))
-            } }
+              dispatch(setRoom(0));
+              dispatch(setClub(i));
+            }}
             optionFilterProp='children'
             filterOption={(input, option) =>
               (option?.label ?? '').includes(input)
